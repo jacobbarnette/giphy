@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="#" alt="">
+    <button id="newGif">New Gif</button>
+    
+        <input type="text" id="gifSearch">
+        <button id="generateGif">Generate</button>
+    </form>
+    <script>
+        const img = document.querySelector('img'); 
+        const apiKey = 'qlBOjifdnu5xuICC1jy5gpHwUJaAmf9j';
+        let url = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=cats`;
+        const newGifBtn = document.getElementById('newGif');
+        const generateGifBtn = document.getElementById('generateGif');
+        let gifSearch = document.getElementById('gifSearch');
+
+        
+        function getNewGif(){
+            gifSearch.value = '';
+            fetch(url, {mode: "cors"})
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(response) {
+                img.src = response.data.images.original.url;
+            });
+        }
+        
+        generateGifBtn.addEventListener('click', generateNewGif)
+        
+        function generateNewGif(){
+            gifSearch = gifSearch.value;
+            url = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=${gifSearch}`
+            fetch(url, {mode: 'cors'})
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(response){
+                img.src = response.data.images.original.url;
+            })
+           
+        }
+    
+       
+           
+           
+    
+       
+        getNewGif();
+        newGifBtn.addEventListener('click', getNewGif);
+    </script>
+</body>
+</html>
